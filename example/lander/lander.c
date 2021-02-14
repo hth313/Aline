@@ -8,11 +8,10 @@ typedef struct lander {
   point16_t delta;            // counts how far we moved, to be moved
                               //   gradually to screen position
   uint16_t  fuel;             // fuel left
-  uint8_t   angle;            // current angle, 144 degree based
-  int8_t    rotationDelta;    // 144 degree based rotation angle
+  uint8_t   angle;            // current angle, Q0.8 fixed point ratios of Tau
+  int8_t    rotationDelta;    // rotation delta angle
   uint8_t   rotationTick;     // how often to update rotation
   uint8_t   rotationCounter;  // count down to next rotation
-  trans8_t  transformation;   // transformation matrix
 } lander_t;
 
 /* Local functions */
@@ -45,8 +44,7 @@ lander_t theLander = {
   0,               // initial angle
   1,               // rotation
   2,               // rotation tick
-  2,               // rotation counter
-  { 0, }           // transformation, to be filled in
+  2                // rotation counter
 };
 
 static void tickUpdateLander (shape_t * shape) {
@@ -56,10 +54,10 @@ static void tickUpdateLander (shape_t * shape) {
     // it is spinning!
     if (--lander->rotationCounter == 0) {
       // time to update its rotation
-      uint8_t angle = addAngleDelta(lander->angle, lander->rotationDelta);
-      lander->angle = angle;
-      rotateTransformation(angle, &lander->transformation);
-      transformAndScale(shape, &lander->transformation, &lander->scale);
+      lander->angle += lander->rotationDelta;
+      trans8_t transformation;
+      rotateTransformation(lander->angle, &transformation);
+      transformAndScale(shape, &transformation, &lander->scale);
     }
   }
 

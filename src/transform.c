@@ -2,7 +2,7 @@
 
 // Apply a transformation on a shape with optional scaling
 void transformAndScale(shape_t *shape,
-		       trans8_t const *transformation,
+		       trans8_t  const *transformation,
 		       point16_t const *scale) {
   uindex_t end = shape->pointCount;
   point16_t transpoint[end];

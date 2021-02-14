@@ -16,11 +16,13 @@ int main () {
     int frac = (conv.ii & 0x7fffff) | 0x800000;
     int exp = (conv.ii >> 23) - 127;
 
+    // align with exponent
     while (exp) {
       frac >>= 1;
       exp++;
     }
 
+    // round
     if (   (frac & 0xc000) == 0x4000 && (frac & 0x3000) != 0
 	|| (frac & 0xc000) == 0xc000) {
       frac += 0x8000;
@@ -28,17 +30,21 @@ int main () {
 	frac >>= 1;
       }
     }
-    frac >>= 15;
+
+    frac >>= 16;
+
+    // Bias it so that "1" becomes 7f
+    frac--;
+
     if (sign) {
-      frac = (-frac) & 0xffff;
+      frac = (-frac) & 0xff;
     }
 
     if (conv.ii == 0) {
       frac = 0;
       exp = 0;
     }
-//    printf("0x%04x,\n", frac);
-    printf("0x%02x,\n", frac >> 2);
+    printf("0x%02x,\n", frac);
 
   }
 }
