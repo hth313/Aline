@@ -93,16 +93,14 @@ typedef struct shape {
  */
 
 void transformAndScale(shape_t *shape,
-		       trans8_t const *transformation,
+		       trans16_t const *transformation,
 		       point16_t const *scale);
 
 void scale(shape_t *shape, point16_t const *scale);
 
 void translatePoint8 (point16_t *result,
-		      point8_t const *point, trans8_t const *trans);
+		      point8_t const *point, trans16_t const *trans);
 
-uint8_t addAngleDelta(uint8_t angle, int8_t delta);
-
-void rotateTransformation(uint8_t angle, trans8_t* trans);
+void rotateTransformation(uint8_t angle, trans16_t* trans);
 
 #endif // __ALINE_H__
