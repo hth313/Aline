@@ -1,3 +1,4 @@
+#if 0
 #include "aline.h"
 
 /*
@@ -9,13 +10,12 @@
  * To separate drawing from the data, two types are used.
  */
 
-enum penAction { movePen, lineTo, plotAt, endPen } penAction_t;
-
-typedef enum penAction *penActions_t;
+enum penAction { movePen, lineTo, plotAt  };
 
 typedef struct shape {
-  uint8_t *draw;
-  point8_t *where;
+  uint8_t *penActions;   // pen actions
+  point8_t *points;      // coordinates
+  uint8_t pointCount;    //
 } shape_t;
 
 // A square of 100 pixels with axis in its center
@@ -24,5 +24,17 @@ point8_t squarePoints[] = { { -50, -50 },
                              { 50, 50 },
                              { -50, 50 },
                              { -50, - 50 } };
-uint8_t squareActions[] = { movePen, lineTo, lineTo, lineTo, lineTo, endPen };
-shape_t square = { squareActions, squarePoints };
+uint8_t squareActions[] = { movePen, lineTo, lineTo, lineTo, lineTo };
+shape_t square = { squareActions, squarePoints, 5 };
+
+typedef struct shapeInstance {
+  point16_t position;         // the position of the object
+  shape_t  *shape;            // basic shape
+  color_t   color;            // base color to draw it in
+  trans_t  *transformation;   // active transformation matrix
+  uint8_t   scaleX;           // scale factor, fixed point value scaled by
+                              // ScaleFactor, 0 means the same as
+                              // (1 << ScaleFactor), i.e. keep current size.
+  uint8_t   scaleY;
+} shape_instance_t;
+#endif

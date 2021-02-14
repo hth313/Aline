@@ -17,9 +17,11 @@
 //
 // **********************************************************************
 
-void translate_point16 (point32_t* result,
-                        point16_t*  point,
-                        uint16_t    trans[2][2]) {
-  result->x = (long) point->x * trans[0][0] + (long) point->y * trans[1][0];
-  result->y = (long) point->x * trans[0][1] + (long) point->y * trans[1][1];
+void translate_point16 (point32_t *result,
+                        point16_t const *point,
+                        trans16_t const *trans) {
+  result->x = (long) point->x * trans->matrix[0][0] +
+              (long) point->y * trans->matrix[1][0];
+  result->y = (long) point->x * trans->matrix[0][1] +
+              (long) point->y * trans->matrix[1][1];
 }

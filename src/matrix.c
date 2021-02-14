@@ -2,7 +2,7 @@
 
 // **********************************************************************
 //
-// translate_point8 - multiply 2x1 by 2x2 matrix
+// translatePoint8 - multiply 2x1 by 2x2 matrix
 //
 // This function translates a point using a transformation matrix.
 // The typical use case is rotation, but it can also be used for
@@ -17,9 +17,8 @@
 //
 // **********************************************************************
 
-void translate_point8 (point16_t* result,
-                       point8_t*  point,
-                       int8_t    trans[2][2]) {
-  result->x = point->x * trans[0][0] + point->y * trans[1][0];
-  result->y = point->x * trans[0][1] + point->y * trans[1][1];
+void translatePoint8 (point16_t *result,
+		      point8_t const *point, trans8_t const *trans) {
+  result->x = point->x * trans->matrix[0][0] + point->y * trans->matrix[1][0];
+  result->y = point->x * trans->matrix[0][1] + point->y * trans->matrix[1][1];
 }
