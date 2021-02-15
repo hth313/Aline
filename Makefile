@@ -1,6 +1,6 @@
 VPATH = src:example/lander
 ASM_SRCS = plot.s
-C_SRCS = matrix.c matrix2.c transform.c angle.c
+C_SRCS = matrix.c matrix2.c transform.c angle.c toplevel.c render.c
 LIB = aline.a
 
 LANDER_SRCS = lander.c
