@@ -37,7 +37,7 @@ lander_t theLander = {
   { squareActions, squarePoints, currentPoints, LanderPointCount,
     { 0, 0 }, // initial position
     tickUpdateLander,
-    true},         // visible
+    true },         // visible
   { 0, 0 },        // scale factor, no scaling now
   { 0x05, 0x01 },  // initial speed
   { 0, 0 },        // count delta

@@ -4,15 +4,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-// This is the number of fixed point decimal bits used for a scale
-// factor. Thus (1 << ScaleFactor) means keep current size.
-// #define ScaleFactor 4
-
-// Normalize a result after transformation. This rounds a fixed
-// point value with 8 binary fraction digits.
-#define Normalize(x)        ((uint8_t) (((x) + 0x40) >> 8))
-//#define NormalizeScaling(x) \
-//           ((uint8_t) (((x) + (1 << (ScaleFactor - 2))) >> ScaleFactor))
+// Normalize a Q8.8 number. It is round it up if 0.11 or higher, an
+// approximative simplification.
+#define NormalizeQ8_8(x)   ((uint8_t) (((uint16_t)((x) + 0x40)) >> 8))
 
 // Fast indexing type used for shape arrays
 typedef uint_fast8_t uindex_t;
@@ -106,8 +100,8 @@ void transformAndScale(shape_t *shape,
 
 void scale(shape_t *shape, point16_t const *scale);
 
-void translatePoint8 (point16_t *result,
-		      point8_t const *point, trans8_t const *trans);
+void translatePointSine (point8_t *result,
+			 point8_t const *point, trans8_t const *trans);
 
 void rotateTransformation(uint8_t angle, trans8_t* trans);
 
