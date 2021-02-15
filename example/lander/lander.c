@@ -36,8 +36,9 @@ point8_t currentPoints[LanderPointCount];
 lander_t theLander = {
   { squareActions, squarePoints, currentPoints, LanderPointCount,
     { 0, 0 }, // initial position
-    tickUpdateLander },
-  { 0, 0 }, // scale factor, no scaling now
+    tickUpdateLander,
+    true},         // visible
+  { 0, 0 },        // scale factor, no scaling now
   { 0x05, 0x01 },  // initial speed
   { 0, 0 },        // count delta
   1000,            // fuel

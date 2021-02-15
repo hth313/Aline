@@ -2,6 +2,7 @@
 #define __ALINE_H__
 
 #include <stdint.h>
+#include <stdbool.h>
 
 // This is the number of fixed point decimal bits used for a scale
 // factor. Thus (1 << ScaleFactor) means keep current size.
@@ -84,9 +85,16 @@ typedef struct shape {
   uint8_t         pointCount;       // number of elements in above arrays
   point16_t       position;         // screen position
   void (*tickUpdate)(struct shape*);
-                              // function that will update a shape when a
-                              // tick occurs
+                                    // function that will update a shape when a
+                                    // tick occurs
+  bool            visible;
 } shape_t;
+
+// The application type
+typedef struct app {
+  void (*tick)();
+  void (*render)(uint8_t);
+} app_t;
 
 /*
  * Exported functions
@@ -102,5 +110,9 @@ void translatePoint8 (point16_t *result,
 		      point8_t const *point, trans8_t const *trans);
 
 void rotateTransformation(uint8_t angle, trans8_t* trans);
+
+void draw (point16_t* from, point16_t* to);
+
+void plot (point16_t* at);
 
 #endif // __ALINE_H__
