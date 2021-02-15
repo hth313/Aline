@@ -1,8 +1,5 @@
 #include "aline.h"
-
-// This flag is set by the main loop when waiting for a vsync.
-// The interrupt is supposed to clear it when vsync happens.
-__zpage uint8_t syncFlag;
+#include <intrinsics6502.h>
 
 // This variable is set to 0 or 1 by the vblank interrupt to indicate which
 // bitmap is currently being show.
@@ -21,10 +18,7 @@ void topLevel(app_t *app) {
     app->render(bitmapIndex);
 
     // Wait until vblank
-    syncFlag++;
-    while (syncFlag) {
-      // do nothing
-    }
+    __wait_for_interrupt();
   }
 }
 
