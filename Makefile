@@ -12,7 +12,7 @@ OBJS = $(ASM_SRCS:%.s=%.o) $(C_SRCS:%.c=%.o)
 	as6502 --cpu=65c02 --list-file=$(@:%.o=obj/%.lst) -o obj/$@ $<
 
 %.o: %.c
-	cc6502 --cpu=65c02 -O2 --list-file=$(@:%.o=obj/%.lst) -o obj/$@ $< -Iinclude -I../goabby/lib/clib/include -I../goaby/nuttx/include
+	cc6502 --cpu=65c02 -O2 --list-file=$(@:%.o=obj/%.lst) -o obj/$@ $< -Iinclude
 
 all: $(LIB) lander
 
