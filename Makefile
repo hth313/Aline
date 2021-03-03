@@ -1,26 +1,26 @@
 VPATH = src:example/lander
 ASM_SRCS = plot.s
-C_SRCS = matrix.c matrix2.c transform.c angle.c toplevel.c render.c
+C_SRCS = angle.c matrix.c matrix2.c transform.c angle.c toplevel.c render.c
 LIB = aline.a
 
 LANDER_SRCS = lander.c
-LANDER_OBJS = $(LANDER_SRCS:%.c=%.o)
+LANDER_OBJS = $(LANDER_SRCS:%.c=obj/%.o)
 
-OBJS = $(ASM_SRCS:%.s=%.o) $(C_SRCS:%.c=%.o)
+OBJS = $(ASM_SRCS:%.s=obj/%.o) $(C_SRCS:%.c=obj/%.o)
 
-%.o: %.s
-	as6502 --cpu=65c02 --list-file=$(@:%.o=obj/%.lst) -o obj/$@ $<
+obj/%.o: %.s
+	as6502 --core=65c02 --target=x16 --list-file=$(@:%.o=%.lst) -o $@ $<
 
-%.o: %.c
-	cc6502 --cpu=65c02 -O2 --list-file=$(@:%.o=obj/%.lst) -o obj/$@ $< -Iinclude
+obj/%.o: %.c
+	cc6502 --core=65c02 --target=x16 -O2 --list-file=$(@:%.o=%.lst) -o $@ $< -Iinclude
 
 all: $(LIB) lander
 
 $(LIB): $(OBJS)
-	(cd obj ; nlib ../$@ $^)
+	nlib $@ $^
 
-lander: $(LANDER_OBJS)
-	(cd obj ; ln6502 ../$@ $^)
+lander: $(LANDER_OBJS) $(LIB)
+	ln6502 --target=x16 --list-file=lander.lst --cross-reference -o $@ $^ x16.scm lib65c02.a module/retrolib/x16.a --rtattr exit=simplified --output-format prg
 
 clean:
-	-rm $(OBJS) $(LIB)
+	-rm $(OBJS) $(LIB) $(LANDER_OBJS) lander
