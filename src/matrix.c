@@ -19,8 +19,8 @@
 //
 // **********************************************************************
 
-void translatePoint8 (point8_t *result,
-		      point8_t const *point, trans8_t const *trans) {
+void translatePointSine (point8_t *result,
+                         point8_t const *point, trans8_t const *trans) {
   result->x = Normalize(point->x * trans->matrix[0][0] + point->y * trans->matrix[1][0]);
   result->y = Normalize(point->x * trans->matrix[0][1] + point->y * trans->matrix[1][1]);
 }
