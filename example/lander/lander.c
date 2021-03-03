@@ -83,3 +83,7 @@ static void tickUpdateLander (shape_t * shape) {
     lander->delta.y |= 0xff00;
   }
 }
+
+int main () {
+  return 0;
+}
