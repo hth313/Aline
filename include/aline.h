@@ -95,13 +95,13 @@ typedef struct app {
  */
 
 void transformAndScale(shape_t *shape,
-		       trans8_t const *transformation,
-		       point16_t const *scale);
+                       trans8_t const *transformation,
+                       point16_t const *scale);
 
 void scale(shape_t *shape, point16_t const *scale);
 
 void translatePointSine (point8_t *result,
-			 point8_t const *point, trans8_t const *trans);
+                         point8_t const *point, trans8_t const *trans);
 
 void rotateTransformation(uint8_t angle, trans8_t* trans);
 
