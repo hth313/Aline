@@ -1,7 +1,5 @@
 #include "aline.h"
 
-// Angles are based on that a full circle is 144, so the smallest
-// unit is 2.5 degrees.
 #define QuarterCircle 64
 
 // Sine table
